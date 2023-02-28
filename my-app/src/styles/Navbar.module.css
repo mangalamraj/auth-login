@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;700;800;900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+.Navbar{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-family: lato;
+    background-color: #DFFFD8;
+    height: 4.5rem;
+    align-items: center;
+}
+.Head{
+    font-weight: 800;
+    margin-left: 1.5rem;
+    font-size: 1.5rem;
+}
+.items{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 200;
+}
+.login, .cart, .user{
+    margin-right: 2rem;
+}
