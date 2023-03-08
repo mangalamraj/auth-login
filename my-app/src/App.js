@@ -1,25 +1,35 @@
-import Login from "./components/Login";
-import Navbar from "./components/Navbar";
+import Login from "./components/login";
 import Signup from "./components/Signup";
 import {
-  BrowserRouter as Router,
+
   Routes,
   Route
-  
+
 } from "react-router-dom";
 import Home from "./components/Home";
+import DataProvider from "./context/DataProvider";
 
 
 function App() {
   return (
-  
-    
-    <Routes>
-      <Route exact path="/" element={<Home/>}></Route>
-      <Route path="/login" element={<Login/>}></Route>
-      <Route path="/signup" element={<Signup/>}></Route>
-    </Routes>
-    
+
+
+    <DataProvider>
+              <Routes>
+        <Route exact path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+      </Routes>
+    </DataProvider>
+
+
+
+
+
+
+
+
+
   );
 }
 

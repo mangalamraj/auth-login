@@ -1,14 +1,22 @@
-import express from "express"
-import dotenv from "dotenv"
-import Routes from "./routes/routes.js"
+import express from "express";
+import dotenv from "dotenv";
+import Router from './routes/route.js'
 import cors from "cors"
+import bodyParser from "body-parser";
+import  Connection  from "./database/db.js";
 const app = express();
-const port = 8000;
-app.use(cors());
-import Connection from "./database/db.js";
+
 dotenv.config();
-const username = process.env.DB_USERNAME
-const password = process.env.DB_PASSWORD
-Connection(username,password);
-app.use('/',Routes);
-app.listen(port,()=>console.log("Service running on port 8000"))
+app.use(cors());
+
+app.use(bodyParser.json({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use('/',Router);
+
+const PORT = 8000;
+
+const USERNAME = process.env.DB_USERNAME;
+const PASSWORD = process.env.DB_PASSWORD;
+
+Connection(USERNAME,PASSWORD);
+app.listen(PORT,()=>console.log(`Server is running successfully on PORT ${PORT}`))
