@@ -1,40 +1,59 @@
-import { useState } from "react"
-import { addUser } from "../services/api"
-import styles from "../styles/Signup.module.css"
+import { useState, useContext } from "react"
+import styles from "../styles/signup.module.css"
+import { authenticateSignup } from "../service/api"
 import Navbar from "./Navbar"
-const Signup = () =>{
+import { DataContext } from '../context/DataProvider'
+import { useNavigate } from "react-router-dom"
+
+const Signup = () => {
+    const history = useNavigate();
+    const { setAccount } = useContext(DataContext);
+    const signupInitialValues = {
+        name: '',
+        username: '',
+        phonenumber: '',
+        password: '',
+        confirmpassword: ''
+    }
+    const [signup, setsignup] = useState(signupInitialValues);
+    const onInputChange = (e) => {
+        setsignup({ ...signup, [e.target.name]: e.target.value });
+
+    }
+    var el = document.getElementById('hello');
+    if (el) {
+        el.addEventListener('click', function (event) {
+            event.preventDefault()
+        });
+    }
 
     
-    
-    const defaultValue={
-        username: '',
-        password: '',
-        confirmpassword:''
+    const signupUser = async () => {
+
+
+        let response = await authenticateSignup(signup)
+        console.log(response)
+        if (!response) return;
+
+        setAccount(signup.name)
+        history("/")
     }
-    const [User,SetUser]=useState(defaultValue)
-    const onValueChange=(e)=>{
-        
-        SetUser({...User,[e.target.name]:e.target.value});
-    }
-    const addUserDetails = async()=>{
-        await addUser(User);
-        
-    }
-    return(
-        <div className={styles.signuppage}>
-            <Navbar/>
-            <b>Signup</b>
-            <div>
-                <form className={styles.form}>
-                    <input type="email" placeholder="Your UserName" onChange={(e)=>onValueChange(e)} name='email'></input><br></br>
-                    <input type="password" placeholder="Password" name='password'></input><br/>
-                    <input type="password" placeholder="ConfirmPassword" name='confirmpassword'></input><br/>
-                   <br/>
-                    <button onClick={addUserDetails}>Signup</button>
-                    
-                </form>
-            </div>
+    return (
+
+        <div className={styles.formdiv}>
+            <Navbar />
+            <br />
+            <h1>Signup</h1>
+            <form className={styles.form}>
+                <input type="text" placeholder="name" onChange={(e) => onInputChange(e)} name="name"></input><br />
+                <input type="text" placeholder="username" onChange={(e) => onInputChange(e)} name="username"></input><br />
+                <input type="text" placeholder="phone number" onChange={(e) => onInputChange(e)} name="phonenumber"></input><br />
+                <input type="text" placeholder="password" onChange={(e) => onInputChange(e)} name="password"></input><br />
+                <input type="text" placeholder="confirm password" onChange={(e) => onInputChange(e)} name="confirmpassword"></input><br /><br />
+                <button onClick={() => signupUser()} id="hello">Submit</button>
+            </form>
         </div>
+
     )
 }
 
